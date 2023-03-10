@@ -56,15 +56,15 @@ subplot(2, 2, 1);
 imshow(HSV);
 title(HSV);
 
-subplot(2,2,2);
+subplot(2, 2, 2);
 imshow(H);
 title('H');
 
-subplot(2,2,3);
+subplot(2, 2, 3);
 imshow(S);
 title('S');
 
-subplot(2,2,4);
+subplot(2, 2, 4);
 imshow(V);
 title('V');
 

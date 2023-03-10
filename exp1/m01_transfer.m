@@ -7,7 +7,7 @@ subplot(3, 2, [1, 2]);
 imshow(org);
 title('orgin');
 
-x=ndims(org);
+x = ndims(org);
 if x>2
     img = rgb2gray(org);
 else
