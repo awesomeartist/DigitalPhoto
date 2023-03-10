@@ -43,6 +43,7 @@ imfilter，fft2，fftshift，ifftshift，ordfilt2，medfilt2
 
 
 1.  对图像2实现梯度倒数加权平均法，其模板信息如下
+
 $$
 W=\left[\begin{array}{lll}
 w(x-1, y-1) & w(x-1, y) & w(x-1, y+1) \\
@@ -58,6 +59,7 @@ $$
 $$
 g(x, y, i, j)=\frac{1}{|f(x+i, y+j)-f(x, y)|}
 $$
+
 2.  对图像3实现同态滤波增强。
 
 同态滤波思路如下：(滤波器参数自行设定)
