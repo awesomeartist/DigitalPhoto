@@ -76,13 +76,13 @@ varargout{1} = handles.output;
 % --- Executes on button press in pushbutton1.
 function pushbutton1_Callback(hObject, eventdata, handles)
 global origin I0
-[filename,pathname]=uigetfile({'*.*';'*.bmp';'*.jpg';'*.tif';'*.jpg'},'选择图片');
-if isequal(filename,0)||isequal(pathname,0)
+[filename,pathname] = uigetfile({'*.*';'*.bmp';'*.jpg';'*.tif';'*.jpg'},'选择图片');
+if isequal(filename,0) || isequal(pathname,0)
         errordlg('您还没有选取图片！！','温馨提示');%如果没有输入，则创建错误对话框?
          return;
 else
-           str=[pathname,filename];
-           origin=imread(str);
+           str = [pathname,filename];
+           origin = imread(str);
            axes(handles.axes1);
           imshow(origin),title('原图像'); 
           I0=origin;
@@ -95,23 +95,23 @@ end
 % --- Executes on selection change in popupmenu1.
 function popupmenu1_Callback(hObject, eventdata, handles)
 global I0
-val=get(handles.popupmenu1,'value');
-x=ndims(I0);
-if x>2
-    img=double(rgb2gray(I0));
+val = get(handles.popupmenu1,'value');
+n = ndims(I0);
+if n>2
+    img = double(rgb2gray(I0));
 else
-    img=double(I0);
+    img = double(I0);
 end
-     ma=max(max(img));
-     mi=min(min(img));
+     ma = max(max(img));
+     mi = min(min(img));
 switch val
     case 1
-         I1=(img-mi)*(255/(ma-mi));  
+         I1 = (img-mi)*(255/(ma-mi));  
          axes(handles.axes2);
-         I1=uint8(I1);
+         I1 = uint8(I1);
          imshow(I1),title('灰度变换后');
     case 2
-         I1=uint8(255*(img/255).^0.5);         %幂次变换
+         I1 = uint8(255*(img/255).^0.5);         %幂次变换
          axes(handles.axes2);
          imshow(I1),title('Gamma变换后');
     case 3
@@ -223,65 +223,65 @@ end
 % --- Executes on selection change in popupmenu3.
 function popupmenu3_Callback(hObject, eventdata, handles)
 global I0
-val=get(handles.popupmenu3,'value');
-x=ndims(I0);
-if x>2
-    img=double(rgb2gray(I0));
+val = get(handles.popupmenu3,'value');
+n = ndims(I0);
+if n > 2
+    img = double(rgb2gray(I0));
 else
-    img=double(I0);
+    img = double(I0);
 end
 switch val
  case 1
-        T=50;%阈值
-        [m,n]=size(img);
-        I3=zeros(m,n);
-        for i=2:m-1
-            for j=2:n-1
-                I3(i,j)=abs(I0(i+1,j)-I0(i,j))+abs(I0(i,j+1)-I0(i,j));
-                if I3(i,j)<T
-                    I3(i,j)=0;
+        T = 50;%阈值
+        [m,n] = size(img);
+        I3 = zeros(m,n);
+        for i = 2:m-1
+            for j = 2:n-1
+                I3(i,j) = abs(I0(i+1,j)-I0(i,j))+abs(I0(i,j+1)-I0(i,j));
+                if I3(i,j) < T
+                    I3(i,j) = 0;
                 else
-                    I3(i,j)=255;
+                    I3(i,j) = 255;
                 end
             end
         end
         axes(handles.axes2);
         imshow(I3),title('梯度算子锐化');
     case 2
-        T=50;%阈值
-        [m,n]=size(img);
-        I3=zeros(m,n);
-        for i=2:m-1
-            for j=2:n-1
-                I3(i,j)=abs(img(i+1,j+1)-img(i,j))+abs(img(i+1,j)-img(i,j+1));
-                if I3(i,j)<T
-                    I3(i,j)=0;
+        T = 50;%阈值
+        [m, n] = size(img);
+        I3 = zeros(m,n);
+        for i = 2:m-1
+            for j = 2:n-1
+                I3(i,j) = abs(img(i+1,j+1)-img(i,j))+abs(img(i+1,j)-img(i,j+1));
+                if I3(i,j) < T
+                    I3(i,j) = 0;
                 else
-                    I3(i,j)=255;
+                    I3(i,j) = 255;
                 end
             end
         end
         axes(handles.axes2);
         imshow(I3),title('Roberts算子锐化');
     case 3
-        I3=edge(img,'prewitt');
+        I3 = edge(img,'prewitt');
         axes(handles.axes2);
         imshow(I3),title('Prewitt算子锐化');
     case 4
-        I3=edge(img,'sobel');
+        I3 = edge(img,'sobel');
         axes(handles.axes2);
         imshow(I3),title('Sobel算子锐化');
     case 5
-        T=50;%阈值
-        [m,n]=size(img);
-        I3=zeros(m,n);
-        for i=2:m-1
-            for j=2:n-1
-                I3(i,j)=abs(img(i+1,j)+img(i-1,j)+img(i,j+1)+img(i,j-1)-4*img(i,j));
-                if I3(i,j)<T
-                    I3(i,j)=0;
+        T = 50;%阈值
+        [m, n] = size(img);
+        I3=zeros(m, n);
+        for i = 2:m-1
+            for j = 2:n-1
+                I3(i,j) = abs(img(i+1,j) + img(i-1,j) + img(i,j+1) + img(i,j-1)-4*img(i,j));
+                if I3(i,j) < T
+                    I3(i,j) = 0;
                 else
-                    I3(i,j)=255;
+                    I3(i,j) = 255;
                 end
             end
         end
@@ -316,14 +316,14 @@ global org
 val=get(handles.popupmenu2,'value');
 switch val
     case 1
-        T=50;%阈值
-        [m,n]=size(org);
-        I3=zeros(m,n);
-        for i=2:m-1
-            for j=2:n-1
-                I3(i,j)=abs(org(i+1,j)-org(i,j))+abs(org(i,j+1)-org(i,j));
-                if I3(i,j)<T
-                    I3(i,j)=0;
+        T = 50;%阈值
+        [m, n]=size(org);
+        I3 = zeros(m,n);
+        for i = 2:m-1
+            for j = 2:n-1
+                I3(i,j) = abs(org(i+1,j)-org(i,j))+abs(org(i,j+1)-org(i,j));
+                if I3(i,j) < T
+                    I3(i,j) = 0;
                 else
                     I3(i,j)=255;
                 end
@@ -334,24 +334,24 @@ switch val
     case 2
 
     case 3
-        I3=edge(org,'prewitt');
+        I3 = edge(org,'prewitt');
         axes(handles.axes4);
         imshow(I3),title('Prewitt算子锐化');
     case 4
-        I3=edge(org,'sobel');
+        I3 = edge(org,'sobel');
         axes(handles.axes4);
         imshow(I3),title('Sobel算子锐化');
     case 5
-                T=20;%阈值
-        [m,n]=size(org);
-        I3=zeros(m,n);
-        for i=2:m-1
-            for j=2:n-1
-                I3(i,j)=abs(org(i+1,j)+org(i-1,j)+org(i,j+1)+org(i,j-1)-4*org(i,j));
-                if I3(i,j)<T
-                    I3(i,j)=0;
+        T = 20;%阈值
+        [m, n] = size(org);
+        I3 = zeros(m,n);
+        for i = 2:m-1
+            for j = 2:n-1
+                I3(i,j) = abs(org(i+1,j) + org(i-1,j) + org(i,j+1) + org(i,j-1) - 4*org(i,j));
+                if I3(i,j) < T
+                    I3(i,j) = 0;
                 else
-                    I3(i,j)=255;
+                    I3(i,j) = 255;
                 end
             end
         end
@@ -382,40 +382,40 @@ end
 % --- Executes on selection change in popupmenu4.
 function popupmenu4_Callback(hObject, eventdata, handles)
 global I0
-val=get(handles.popupmenu4,'value');
-x=ndims(I0);
-if x>2
-    img=rgb2gray(I0);
+val = get(handles.popupmenu4,'value');
+n = ndims(I0);
+if n > 2
+    img = rgb2gray(I0);
 else
-    img=I0;
+    img = I0;
 end
 switch val
     case 1
-        I4=ordfilt2(img,5,ones(3,3));
+        I4 = ordfilt2(img,5,ones(3,3));
         axes(handles.axes2);
         imshow(I4),title('中值滤波结果'); 
     case 2
-        img=double(img);
-       Fs=fftshift(fft2(img/255));
-       Fs1=uint8(abs(Fs));
+        img = double(img);
+       Fs = fftshift(fft2(img/255));
+       Fs1 = uint8(abs(Fs));
        axes(handles.axes3);
        imshow(Fs1),title('傅里叶变换频谱');
 %        Fs2=uint8(log(1 + abs(Fs)));
 %        axes(handles.axes4);
 %        imshow(Fs2),title('傅里叶变换取对数频谱');
-       [m,n]=size(Fs);
-       m0=round(m/2);
-       n0=round(m/2);
-       D0=20;
-       for i=1:m
-           for j=1:n
-               distance=sqrt((i-m0)^2+(j-n0)^2);
-               if distance<=D0
-                   h=1;
+       [m, n] = size(Fs);
+       m0 = round(m/2);
+       n0 = round(m/2);
+       D0 = 20;
+       for i = 1:m
+           for j = 1:n
+               distance = sqrt((i-m0)^2+(j-n0)^2);
+               if distance <= D0
+                   h = 1;
                else
-                   h=0;
+                   h = 0;
                end
-               Fs(i,j)=h*Fs(i,j);
+               Fs(i,j) = h * Fs(i,j);
            end
        end
        I4=uint8(real(ifft2(ifftshift(255*Fs))));
@@ -429,24 +429,24 @@ switch val
        imshow(uint8(abs(Fs))),title('傅里叶变换频谱');
        %axes(handles.axes4);
        %imshow(log(1 + abs(s))),title('傅里叶变换取对数频谱');
-       [m,n]=size(Fs);
-       m0=round(m/2);
-       n0=round(m/2);
-       D0=20;
-       p=0.2;
-       q=0.5;
-       for i=1:m
-           for j=1:n
-               distance=sqrt((i-m0)^2+(j-n0)^2);
-               if distance<=D0
+       [m, n] = size(Fs);
+       m0 = round(m/2);
+       n0 = round(m/2);
+       D0 = 20;
+       p = 0.2;
+       q = 0.5;
+       for i = 1:m
+           for j = 1:n
+               distance = sqrt((i-m0)^2+(j-n0)^2);
+               if distance <= D0
                    h=0;
                else
                    h=1;
                end
-               Fs(i,j)=(p+q*h)*Fs(i,j);
+               Fs(i,j) = (p+q*h)*Fs(i,j);
            end
        end
-       I4=uint8(real(ifft2(ifftshift(255*Fs))));
+       I4 = uint8(real(ifft2(ifftshift(255*Fs))));
        axes(handles.axes2);
        imshow(I4),title('理想高通滤波所得图像');
     case 4
@@ -458,7 +458,7 @@ switch val
         v = -N/2:(N/2-1);
         [U,V] = meshgrid(u,v);
         D = sqrt(U.^2 + V.^2);
-        D0 =40;
+        D0 = 40;
         n = 2;
         H2 = 1./(1+(D./D0).^(2*n));
         J2 = fftshift(fft2(img,size(H2,1),size(H2,2))); %转换到频域图像
@@ -471,12 +471,12 @@ switch val
     case 5
         img = I0;
         img = im2double(img);
-        n=1;
-        d=50;
-        h=size(img,1);
-        w=size(img,2);
+        n = 1;
+        d = 50;
+        h = size(img,1);
+        w = size(img,2);
         fftim = fftshift(fft2(double(img)));
-        [x,y]=meshgrid(-floor(w/2):floor(w/2)-1,-floor(h/2):floor(h/2)-1);
+        [x,y] = meshgrid(-floor(w/2):floor(w/2)-1,-floor(h/2):floor(h/2)-1);
         B = sqrt(2) - 1; 
         D = sqrt(x.^2 + y.^2); 
         hhp = 1 ./ (1 + B * ((d ./ D).^(2 * n)));
@@ -513,24 +513,24 @@ end
 % --- Executes on selection change in popupmenu5.
 function popupmenu5_Callback(hObject, eventdata, handles)
 global origin I0 PSF
-val =get(handles.popupmenu5,'value');
+val = get(handles.popupmenu5,'value');
 switch val
     case 1
-        pixel=10;       %模糊像素范围
-        theta=45;       %模糊方向
+        pixel = 10;       %模糊像素范围
+        theta = 45;       %模糊方向
         PSF = fspecial('motion',pixel,theta);
         I0 = imfilter(origin,PSF,'conv','circular');
         axes(handles.axes1);
         imshow(I0),title('添加运动模糊后的图像');
     case 2
-        I0= imnoise(origin,'salt & pepper');
+        I0 = imnoise(origin,'salt & pepper');
         axes(handles.axes1);
         imshow(I0) ,title('添加椒盐噪声后的图像')
     case 3
         %添加高斯噪声
-        mean_value=0;
-        variance=0.025;
-        I0=imnoise(origin,'gaussian',mean_value,variance);
+        mean_value = 0;
+        variance = 0.025;
+        I0 = imnoise(origin,'gaussian',mean_value,variance);
         axes(handles.axes1);
         imshow(I0),title('添加高斯噪声后的图像');
 end
@@ -558,13 +558,13 @@ end
 % --- Executes on selection change in popupmenu6.
 function popupmenu6_Callback(hObject, eventdata, handles)
 global I0
-val=get(handles.popupmenu6,'value');
-img=I0;
+val = get(handles.popupmenu6,'value');
+img = I0;
 switch val
     case 1
         h = size(img, 1);
         w = size(img, 2);
-        I6=zeros(h,w);
+        I6 = zeros(h,w);
         for i = 2 : h-1
             for j = 2 : w-1
                 up = i-1;
@@ -574,11 +574,11 @@ switch val
                 I6(i, j) = mean(mean(img(up : down, left : right)));
             end
         end
-        I6=uint8(I6);
+        I6 = uint8(I6);
         axes(handles.axes2);
         imshow(I6),title('局部平滑后的图像');
     case 2
-        T=16;
+        T = 16;
         h = size(img, 1);
         w = size(img, 2);
         I6=zeros(h,w);
@@ -588,15 +588,15 @@ switch val
                 down = i + 2;
                 left =j - 2;
                 right = j + 2;
-                mea=mean(mean(img(up : down, left : right)));
-                if abs(mea-img(i,j))>=T
-                    I6(i, j) =mea ;
+                avg = mean(mean(img(up : down, left : right)));
+                if abs(avg-img(i,j))>=T
+                    I6(i, j) = avg ;
                 else
-                    I6(i,j)=img(i,j);
+                    I6(i,j) = img(i,j);
                 end               
             end
         end
-        I6=uint8(I6);
+        I6 = uint8(I6);
         axes(handles.axes2);
         imshow(I6),title('超限像素平滑后的图像');
     case 3
@@ -626,7 +626,7 @@ end
 function pushbutton2_Callback(hObject, eventdata, handles)
        global I0
        img = double(I0)/255;
-       Fs=fftshift(fft2(img));
+       Fs = fftshift(fft2(img));
        axes(handles.axes3);
        imshow(uint8(abs(Fs))),title('傅里叶变换频谱');
 % hObject    handle to pushbutton2 (see GCBO)
@@ -648,28 +648,28 @@ function pushbutton3_Callback(hObject, eventdata, handles)
 % --- Executes on selection change in popupmenu7.
 function popupmenu7_Callback(hObject, eventdata, handles)
 global I0
-val=get(handles.popupmenu7,'value');
-x=ndims(I0);
-if x>2
-    img=double(rgb2gray(I0));
+val = get(handles.popupmenu7,'value');
+n = ndims(I0);
+if n>2
+    img = double(rgb2gray(I0));
 else
-    img=double(I0);
+    img = double(I0);
 end
 switch val
     case 1
         T = graythresh(img);
-        I7=imbinarize(img,T);
+        I7 = imbinarize(img,T);
         axes(handles.axes2);
         imshow(I7),title('固定阈值分割后的图像');
     case 2
-        I7=imbinarize(img,'adaptive');
+        I7 = imbinarize(img,'adaptive');
         axes(handles.axes2);
         imshow(I7),title('固定阈值分割后的图像');
     case 3
         sigma = 1;
         gausFilter = fspecial('gaussian', [3,3], sigma);
-        out=imfilter(img, gausFilter, 'replicate');
-        I7=edge(out, 'canny', 0.5);
+        out = imfilter(img, gausFilter, 'replicate');
+        I7 = edge(out, 'canny', 0.5);
         axes(handles.axes2);
         imshow(I7),title('边缘检测结果');
         
@@ -699,12 +699,12 @@ end
 % --- Executes on selection change in popupmenu8.
 function popupmenu8_Callback(hObject, eventdata, handles)
 global I0
-val=get(handles.popupmenu8,'value');
-        x=ndims(I0);
-        if x>2
-            img=rgb2gray(I0);
+val = get(handles.popupmenu8,'value');
+        n = ndims(I0);
+        if n > 2
+            img = rgb2gray(I0);
         else
-            img=I0;
+            img = I0;
         end
 switch val
     case 1
@@ -719,9 +719,9 @@ switch val
         k = 0:255;
         dict = huffmandict(k,P); %生成字典
         enco = huffmanenco(I1,dict); %编码
-        writematrix(enco,'Huffcode.txt');
+        writematrix(enco, 'Huffcode.txt');
     case 2
-                I = img;
+        I = img;
         [M,N] = size(I);
         I1 = I(:);
         P = zeros(1,256);
