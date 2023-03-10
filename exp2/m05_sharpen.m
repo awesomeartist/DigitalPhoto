@@ -1,5 +1,5 @@
 % 图像锐化
-%%
+
 image_init = imread('./IMG-2/lena.jpg');
 n = ndims(image_init);
 if n > 2
@@ -12,34 +12,24 @@ end
 image_noise_gaussian = imnoise(image_gray, 'gaussian' , 0, 0.025);
 
 % 均值滤波
-w = fspecial('average',[3,3]);%3*3均值滤波
+w = fspecial('average',[3,3]); % 3*3 均值滤波
 image_filter_mean = imfilter(image_noise_gaussian, w);
 
-subplot(2, 4, 1)
-imshow(image_init)
-title("原图")
-subplot(2, 4, 2)
-imshow(image_noise_gaussian)
-title("加入高斯噪声")
-subplot(2, 4, 3)
-imshow(image_filter_mean)
-title("均值滤波")
-%% 
-
 % 对图像进行锐化处理
-image_for_sharpen = image_noise_gaussian;
+image_for_sharpen = image_gray;
 
 % 梯度锐化
-T = 150;% 阈值
-image_sharpen_grad = zeros(R, C);
+T = 50;    % 阈值
+[R, C] = size(image_gray);
+image_sharpen_grad = uint8(zeros(R, C));
 for i = 2 : R-1
     for j = 2 : C-1
-        image_sharpen_grad(i,j) = abs(image_for_sharpen(i+1,j)-image_for_sharpen(i,j)) ...
+        grad = abs(image_for_sharpen(i+1,j)-image_for_sharpen(i,j)) ...
                                   + abs(image_for_sharpen(i,j+1)-image_for_sharpen(i,j));
-        if image_sharpen_grad(i,j) < T
-            image_sharpen_grad(i,j) = 0;
+        if grad < T
+            image_sharpen_grad(i,j) = image_for_sharpen(i, j);
         else
-            image_sharpen_grad(i,j) = 255;
+            image_sharpen_grad(i,j) =  grad + image_for_sharpen(i, j);
         end
     end
 end
@@ -52,8 +42,21 @@ g1 = imfilter(Ig2, w, 'replicate');
 image_sharpen_laplacian = Ig2 - g1;  
 
 % sobel 算子锐化
-image_sharpen_sobel = edge(image_for_sharpen, 'sobel');
+
 % prewitt 算子锐化
-image_sharpen_prewitt = edge(image_for_sharpen, 'prewitt');
+
+
+subplot(2, 4, 1)
+imshow(image_init), title("原图")
+subplot(2, 4, 2)
+imshow(image_noise_gaussian), title("加入高斯噪声")
+subplot(2, 4, 3)
+imshow(image_filter_mean), title("均值滤波")
+subplot(2, 4, 5)
+imshow(image_sharpen_grad), title("梯度锐化")
+subplot(2, 4, 6)
+imshow(uint8(image_sharpen_laplacian)), title("laplacian 算子锐化")
+
+
 
 
