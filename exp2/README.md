@@ -50,9 +50,11 @@ w(x, y-1) & w(x, y) & w(x, y+1) \\
 w(x+1, y-1) & w(x+1, y) & w(x+1, y+1)
 \end{array}\right].
 $$
+
 $$
 w(x+i, y+j)=\frac{1}{2} \bullet \frac{g(x, y, i, j)}{\sum_i \sum_j g(x, y, i, j)}(i, j=-1,0,1 \text {, 且不同时为 } 0)
 $$
+
 $$
 g(x, y, i, j)=\frac{1}{|f(x+i, y+j)-f(x, y)|}
 $$
